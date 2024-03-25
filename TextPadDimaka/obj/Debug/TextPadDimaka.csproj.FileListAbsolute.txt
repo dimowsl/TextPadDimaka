@@ -1,0 +1,10 @@
+C:\Users\Admin\Desktop\TextPadDimaka-main\TextPadDimaka\bin\Debug\TextPadSotirios.exe.config
+C:\Users\Admin\Desktop\TextPadDimaka-main\TextPadDimaka\bin\Debug\TextPadSotirios.exe
+C:\Users\Admin\Desktop\TextPadDimaka-main\TextPadDimaka\bin\Debug\TextPadSotirios.pdb
+C:\Users\Admin\Desktop\TextPadDimaka-main\TextPadDimaka\obj\Debug\TextPadDimaka.csproj.AssemblyReference.cache
+C:\Users\Admin\Desktop\TextPadDimaka-main\TextPadDimaka\obj\Debug\TextPadSotirios.Form1.resources
+C:\Users\Admin\Desktop\TextPadDimaka-main\TextPadDimaka\obj\Debug\TextPadSotirios.Properties.Resources.resources
+C:\Users\Admin\Desktop\TextPadDimaka-main\TextPadDimaka\obj\Debug\TextPadDimaka.csproj.GenerateResource.cache
+C:\Users\Admin\Desktop\TextPadDimaka-main\TextPadDimaka\obj\Debug\TextPadDimaka.csproj.CoreCompileInputs.cache
+C:\Users\Admin\Desktop\TextPadDimaka-main\TextPadDimaka\obj\Debug\TextPadSotirios.exe
+C:\Users\Admin\Desktop\TextPadDimaka-main\TextPadDimaka\obj\Debug\TextPadSotirios.pdb

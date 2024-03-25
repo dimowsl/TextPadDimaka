@@ -47,16 +47,17 @@ namespace TextPadSotirios
 
         private void menuOpen_Click(object sender, EventArgs e)
         {
-            //1
-            openFileDialog1.Filter = "Текстови файлове|*.txt|Rich Text Files|*.rtf|Word files|*.doc;*.docx|Всички файлове|*.*";
-            openFileDialog1.FileName = "";
-            openFileDialog1.FilterIndex = 2;
-            openFileDialog1.Title = "Отвори";
-            //2
-            openFileDialog1.ShowDialog();
-            //3
-            this.Text= "Text Pad - Sotirios" + openFileDialog1.SafeFileName;
-            richTextBox1.LoadFile(openFileDialog1.FileName, RichTextBoxStreamType.RichText);
+            OpenFileDialog ofd = new OpenFileDialog();
+            ofd.Title = "Open";
+            ofd.Filter = "Text Document | *.txt|Rich Text |*.rtf|All Files |*.";
+            ofd.FilterIndex = 2;
+            if(ofd.ShowDialog() == DialogResult.OK)
+            {
+                richTextBox1.LoadFile(ofd.FileName, RichTextBoxStreamType.RichText);
+                this.Text = ofd.FileName;
+            }
+
+            
         }
 
         private void menuExit_Click(object sender, EventArgs e)
@@ -112,7 +113,7 @@ namespace TextPadSotirios
                     return;
                 }
 
-                this.Text = "Text Pad - Dimaak" + saveFileDialog.FileName;
+                this.Text = "Text Pad - Dimaka" + saveFileDialog.FileName;
                 richTextBox1.SaveFile(saveFileDialog.FileName, RichTextBoxStreamType.RichText);
             }
         }
@@ -175,6 +176,16 @@ namespace TextPadSotirios
         }
 
         private void menuSave_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void menuFile_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void menuFormat_Click(object sender, EventArgs e)
         {
 
         }
