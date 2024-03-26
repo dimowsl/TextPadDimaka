@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -49,7 +50,7 @@ namespace TextPadSotirios
         {
             OpenFileDialog ofd = new OpenFileDialog();
             ofd.Title = "Open";
-            ofd.Filter = "Text Document | *.txt|Rich Text |*.rtf|All Files |*.";
+            ofd.Filter = "Text Document | *.txt|Rich Text |*.rtf|All Files |*.*";
             ofd.FilterIndex = 2;
             if(ofd.ShowDialog() == DialogResult.OK)
             {
@@ -109,7 +110,7 @@ namespace TextPadSotirios
                 saveFileDialog.FilterIndex = 2;
                 if (saveFileDialog.ShowDialog() == DialogResult.OK)
                 {
-                    File.WriteAllText(saveFileDialog.FileName, richTextBox1.Text);
+                    richTextBox1.SaveFile(saveFileDialog.FileName, RichTextBoxStreamType.RichText);
                     return;
                 }
 
