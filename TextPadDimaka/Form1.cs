@@ -14,7 +14,7 @@ namespace TextPadSotirios
 {
     public partial class Form1 : Form
     {
-        
+        string lastEditedFile = "";
         public Form1()
         {
             InitializeComponent();
@@ -40,25 +40,71 @@ namespace TextPadSotirios
 
         private void menuNew_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("New menu");
+            if (richTextBox1.Modified)
+            {
+                DialogResult answer = MessageBox.Show("Do you want to save the changes",
+                "Confirmation", MessageBoxButtons.YesNoCancel,
+                MessageBoxIcon.Question, MessageBoxDefaultButton.Button1);
+                if (answer == DialogResult.Yes)
+                {
+                    menuSave_Click(sender, e);
+                }
+                if (answer == DialogResult.Cancel)
+                {
+                    return;
+                }
+            }
             richTextBox1.Clear();
-            this.Text = "Text Pad - Dimaka";
+            lastEditedFile = "";
+            this.Text = "Text Pad - New File";
             richTextBox1.Modified = false;
         }
 
         private void menuOpen_Click(object sender, EventArgs e)
         {
-            OpenFileDialog ofd = new OpenFileDialog();
-            ofd.Title = "Open";
-            ofd.Filter = "Text Document | *.txt|Rich Text |*.rtf|All Files |*.*";
-            ofd.FilterIndex = 2;
-            if(ofd.ShowDialog() == DialogResult.OK)
+            if (richTextBox1.Modified)
             {
-                richTextBox1.LoadFile(ofd.FileName, RichTextBoxStreamType.RichText);
-                this.Text = ofd.FileName;
+                DialogResult answer = MessageBox.Show("Do you want to save the changes",
+                "Confirmation", MessageBoxButtons.YesNoCancel,
+                MessageBoxIcon.Question, MessageBoxDefaultButton.Button1);
+                if (answer == DialogResult.Yes)
+                {
+                    menuSave_Click(sender, e);
+                }
+                if (answer == DialogResult.Cancel)
+                {
+                    return;
+                }
             }
+            //1
+            openFileDialog1.Filter = "Text files|*.txt|Rich Text Files|*.rtf|Word files|*.doc;*.docx|All files|*.*";
+            openFileDialog1.FileName = "";
+            openFileDialog1.FilterIndex = 2;
+            openFileDialog1.Title = "Open in Text Pad";
+            //2.
+            if (openFileDialog1.ShowDialog() != DialogResult.OK)
+            {
+                return;
+            }
+            //3.
+            lastEditedFile = openFileDialog1.FileName;
+            this.Text = "DimPad - " + openFileDialog1.SafeFileName;
+            if (openFileDialog1.FilterIndex == 1)
+            {
+               richTextBox1.LoadFile(openFileDialog1.FileName, RichTextBoxStreamType.PlainText);
+            }
+            else if (openFileDialog1.FilterIndex == 2)
+            {
+                richTextBox1.LoadFile(openFileDialog1.FileName, RichTextBoxStreamType.RichText);
+            }
+            else
+            {
+                MessageBox.Show("raboti samo s TXT ili RTF");
+                return;
+            }
+            richTextBox1.Modified = false;
 
-            
+
         }
 
         private void menuExit_Click(object sender, EventArgs e)
@@ -103,20 +149,33 @@ namespace TextPadSotirios
 
         private void menuSaveAs_Click(object sender, EventArgs e)
         {
-            using (SaveFileDialog saveFileDialog = new SaveFileDialog())
+            //1
+            saveFileDialog1.Filter = "Text files|*.txt|Rich Text Files|*.rtf|Word files|*.docx";
+            saveFileDialog1.FileName = "";
+            saveFileDialog1.FilterIndex = 2;
+            saveFileDialog1.Title = "Open in Text Pad";
+            //2.
+            if (saveFileDialog1.ShowDialog() != DialogResult.OK)
             {
-                saveFileDialog.Filter = "Text File|*.txt|Rich Text Files|*.rtf|Word files|*.docx";
-                saveFileDialog.Title = "Запази";
-                saveFileDialog.FilterIndex = 2;
-                if (saveFileDialog.ShowDialog() == DialogResult.OK)
-                {
-                    richTextBox1.SaveFile(saveFileDialog.FileName, RichTextBoxStreamType.RichText);
-                    return;
-                }
-
-                this.Text = "Text Pad - Dimaka" + saveFileDialog.FileName;
-                richTextBox1.SaveFile(saveFileDialog.FileName, RichTextBoxStreamType.RichText);
+                return;
             }
+            //3.
+            lastEditedFile = saveFileDialog1.FileName;
+            this.Text = "Text Pad -" + saveFileDialog1.FileName;
+            if (saveFileDialog1.FilterIndex == 2)
+            {
+                richTextBox1.SaveFile(saveFileDialog1.FileName, RichTextBoxStreamType.RichText);
+            }
+            else if (saveFileDialog1.FilterIndex == 1)
+            {
+                richTextBox1.SaveFile(saveFileDialog1.FileName, RichTextBoxStreamType.PlainText);
+            }
+            else
+            {
+                MessageBox.Show("Ne raboti s tozi format");
+                return;
+            }
+            richTextBox1.Modified = false;
         }
 
         private void richTextBox1_TextChanged(object sender, EventArgs e)
@@ -178,7 +237,18 @@ namespace TextPadSotirios
 
         private void menuSave_Click(object sender, EventArgs e)
         {
+            if (lastEditedFile == "")
+            {
+                menuSaveAs_Click(sender, e);
+            }
+            else
+            {
+                
+                richTextBox1.SaveFile(lastEditedFile, RichTextBoxStreamType.RichText);
+               
 
+            }
+            richTextBox1.Modified = false;
         }
 
         private void menuFile_Click(object sender, EventArgs e)
